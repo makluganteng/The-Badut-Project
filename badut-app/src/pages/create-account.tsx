@@ -15,15 +15,30 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
+import { ConnectWallet, useAddress, useContract, useCreateAccount } from "@thirdweb-dev/react";
+
 export default function CreateAccount() {
   const [state, setState] = useState<Boolean>(true);
   const [owned, setOWned] = useState<String[]>([]);
   const [chain, setChain] = useState<String>("");
 
   const toast = useToast();
+  
+  const { contract } = useContract("0x354E92a1FC12F515CdcCD815A243FbD8BD77a9Eb");
+  const {
+    mutate: createAccount,
+    isLoading,
+    error,
+  } = useCreateAccount(contract);
 
-  const handleClick = () => {
+  if (error) {
+    console.error("failed to create account", error);
+  }
+  const address = useAddress();
+
+  const handleClick = async() => {
     try {
+      createAccount(String(address));
       toast({
         title: "Account created.",
         description: "Account deployed for you.",
@@ -43,6 +58,7 @@ export default function CreateAccount() {
   };
   return (
     <div className="px-[500px]">
+      <ConnectWallet />
       {state ? (
         <div>
           <h1>
