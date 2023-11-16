@@ -37,9 +37,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <RainbowKitProvider chains={chains}>
         <ChakraProvider>
           <ThirdwebProvider
-                // supportedWallets={[
-                //   metamaskWallet(),
-                // ]}
                 activeChain="goerli" 
                 clientId="7e6bd9d8a8f34d78f94faaf050dc8f75"
           >
