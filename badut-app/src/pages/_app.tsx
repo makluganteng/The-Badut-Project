@@ -3,7 +3,15 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import type { AppProps } from "next/app";
-import { polygon, optimism, arbitrum, base, zora, sepolia, goerli } from "viem/chains";
+import {
+  polygon,
+  optimism,
+  arbitrum,
+  base,
+  zora,
+  sepolia,
+  goerli,
+} from "viem/chains";
 import { WagmiConfig, configureChains, createConfig, mainnet } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
@@ -17,8 +25,13 @@ import {
 
 export default function App({ Component, pageProps }: AppProps) {
   const { chains, publicClient } = configureChains(
-    [sepolia,goerli],
-    [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
+    [sepolia, goerli],
+    [
+      alchemyProvider({
+        apiKey: process.env.ALCHEMY_ID || "z6F5YIkN7g8W25b2_IJKT1iKKiEWsfvf",
+      }),
+      publicProvider(),
+    ]
   );
 
   const { connectors } = getDefaultWallets({
@@ -37,11 +50,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <RainbowKitProvider chains={chains}>
         <ChakraProvider>
           <ThirdwebProvider
-                activeChain="goerli" 
-                clientId="7e6bd9d8a8f34d78f94faaf050dc8f75"
+            activeChain="goerli"
+            clientId="7e6bd9d8a8f34d78f94faaf050dc8f75"
           >
-          <Navbar />
-          <Component {...pageProps} />
+            <Navbar />
+            <Component {...pageProps} />
           </ThirdwebProvider>
         </ChakraProvider>
       </RainbowKitProvider>
