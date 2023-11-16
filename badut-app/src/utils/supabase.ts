@@ -2,8 +2,9 @@ import { createClient } from "@supabase/supabase-js";
 
 // Create a single supabase client for interacting with your database
 export const supabase = createClient(
-  process.env.SUPABASE_URL || "",
-  process.env.SUPABASE_ANON_KEY || ""
+  process.env.SUPABASE_URL || "https://gpcysgnoblvcudnuabdg.supabase.co",
+  process.env.SUPABASE_ANON_KEY ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdwY3lzZ25vYmx2Y3VkbnVhYmRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDAwNjUwNjYsImV4cCI6MjAxNTY0MTA2Nn0.S3l89YiGN6SH6hdH_3KnE9LMpuSg95xe5qOHjjfASDk"
 );
 
 export const addOwnedWallet = async (address: string, owned_wallet: any[]) => {
@@ -29,6 +30,18 @@ export const addOwnedWallet = async (address: string, owned_wallet: any[]) => {
       })
       .eq("address", address);
 
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const fetchWallet = async (address: string) => {
+  try {
+    const { data } = await supabase
+      .from("accounts")
+      .select("*")
+      .eq("address", address);
     return data;
   } catch (e) {
     console.log(e);
