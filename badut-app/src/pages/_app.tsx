@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
     [sepolia, goerli],
     [
       alchemyProvider({
-        apiKey: process.env.ALCHEMY_ID || "z6F5YIkN7g8W25b2_IJKT1iKKiEWsfvf",
+        apiKey: process.env.ALCHEMY_ID || "",
       }),
       publicProvider(),
     ]
